@@ -26,7 +26,10 @@ def add_item(item="default", qty=0, logs=None):
     if logs is None:
         logs = []
     if not isinstance(item, str) or not isinstance(qty, (int, float)):
-        raise ValueError("Item must be a string and quantity must be a number.")
+        raise ValueError(
+            "Item must be a string and quantity must be a number."
+        )
+
     stock_data[item] = stock_data.get(item, 0) + qty
     logs.append(f"{datetime.now()}: Added {qty} of {item}")
 
@@ -76,7 +79,10 @@ def load_data(file_path="inventory.json"):
         with open(file_path, "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
-        print(f"File '{file_path}' not found. Starting with empty inventory.")
+        print(
+            f"File '{file_path}' not found. "
+            "Starting with empty inventory."
+        )
         return {}
     except json.JSONDecodeError:
         print(f"Error decoding JSON from '{file_path}'.")
@@ -126,17 +132,20 @@ def main():
     add_item("banana", 2, logs)
     remove_item("apple", 3)
     remove_item("orange", 1)
+
     print(f"Apple stock: {get_qty('apple')}")
     print(f"Low items: {check_low_items()}")
+
     save_data()
 
     # Load data and assign to global dictionary
     data = load_data()
     stock_data.clear()
     stock_data.update(data)
+
     print_data()
 
-    # Example of safe evaluation for demonstration
+    # Example of safe evaluation using ast.literal_eval
     expression = "{'note': 'safe eval example'}"
     result = ast.literal_eval(expression)
     print("Safe eval result:", result)
