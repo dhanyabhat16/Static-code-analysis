@@ -1,0 +1,16 @@
+1. Which issues were the easiest to fix, and which were the hardest? Why?
+
+The easiest issues to fix were the naming convention and formatting errors reported by Pylint and Flake8. Renaming functions like addItem and removeItem to follow the snake_case style and ensuring two blank lines between functions were straightforward syntax adjustments. Similarly, fixing the “line too long” error (E501) only required splitting long lines or using line continuation for readability.
+The hardest issues to fix were those related to code safety and design, such as removing the use of the eval() function and the global variable warning. Replacing eval() with ast.literal_eval() required understanding of secure evaluation practices, while managing the stock_data global variable safely involved adjusting how data is loaded and updated without breaking functionality. These changes required more careful consideration of both functionality and code structure.
+
+2. Did the static analysis tools report any false positives? If so, describe one example.
+
+Yes, one potential false positive was the W0603: Using the global statement warning from Pylint. Although it is generally good practice to avoid global variables, in this particular script the global stock_data dictionary was deliberately used as a central store for the in-memory inventory data. Since the code handled updates and file operations carefully, the warning did not indicate a real design flaw in this context. Therefore, it was a justified and controlled use of a global variable, making this warning more of a guideline than a true issue.
+
+3. How would you integrate static analysis tools into your actual software development workflow?
+
+Static analysis tools like Pylint, Flake8, and Bandit can be integrated into the development workflow through both local development and continuous integration (CI) processes. Locally, developers can configure pre-commit hooks using tools like pre-commit to automatically run these linters before each commit, ensuring that only clean and compliant code is pushed. In a CI/CD environment (e.g., GitHub Actions, GitLab CI, or Jenkins), these tools can be added as automated steps that scan the code on every pull request or commit. This setup helps maintain consistent code quality standards across the team, prevents regression of issues, and enforces security checks continuously.
+
+4. What tangible improvements did you observe in the code quality, readability, or potential robustness after applying the fixes?
+
+After applying the fixes, the code became significantly more readable, maintainable, and secure. Consistent function naming, proper indentation, and meaningful docstrings made the code much easier to understand and modify. The replacement of unsafe constructs like eval() improved security, while explicit error handling for file operations and data loading increased robustness against runtime failures. Additionally, the code now adheres strictly to PEP8 standards, giving it a professional and standardized structure. Overall, the static analysis process led to cleaner, safer, and more maintainable code with fewer potential bugs.
